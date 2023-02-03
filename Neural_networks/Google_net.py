@@ -46,7 +46,7 @@ class GoogLeNet(nn.Module):
         self.sigmoid     = nn.Sigmoid()
         
 
-    def forward(self, x: Tensor, x_) -> Tuple[Tensor, Optional[Tensor], Optional[Tensor]]:
+    def forward(self, x: Tensor, x_):
         out = self._forward_impl(x, x_)
         return out
 
@@ -96,7 +96,7 @@ class GoogLeNet(nn.Module):
         return out
     
     
-    def _transform_input(self, x: Tensor) -> Tensor:
+    def _transform_input(self, x):
         if self.transform_input:
             x_ch0 = torch.unsqueeze(x[:, 0], 1) * (0.229 / 0.5) + (0.485 - 0.5) / 0.5
             x_ch1 = torch.unsqueeze(x[:, 1], 1) * (0.224 / 0.5) + (0.456 - 0.5) / 0.5
@@ -114,7 +114,7 @@ class GoogLeNet(nn.Module):
 
 
 class BasicConv2d(nn.Module):
-    def __init__(self, in_channels: int, out_channels: int, **kwargs: Any) -> None:
+    def __init__(self, in_channels, out_channels, **kwargs):
         super(BasicConv2d, self).__init__()
         self.conv = nn.Conv2d(in_channels, out_channels, bias=False, **kwargs)
         self.bn = nn.BatchNorm2d(out_channels, eps=0.001)
